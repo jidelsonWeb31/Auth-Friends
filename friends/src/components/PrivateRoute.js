@@ -1,16 +1,17 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = (props) => {
-    const Component = component;
+const PrivateRoute = ({component: Component, ...rest}) => {
+    // I could do that code below or I can do shorthand on the first line
+    // const Component = component;
     const token = window.localStorage.getItem('token');
     return(
-        <Route {...props } render={() => {
+        <Route {...rest } render={props => {
             if(token) {
-                return <Component />
+                return <Component {...props} />
             }
              else {
-
+                return  <Redirect to ="/login" />;
             }
         }} />
     )
